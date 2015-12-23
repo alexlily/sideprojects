@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+<title>Tree Making!</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script src="code.js"></script>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>	
+<div id="intro">
+	Tree-making! Pick an algorithm. Click through to walk through the steps.<br><br><br>
+	<div class="explanation" id="njexplain">
+	Neighbor joining reqires first calculating an $r$ score for each leaf:
+	$$r_i = \frac{1}{|L|-2} \sum_{j \in L} dist(i,j)$$
+	This is kind of like an average distance of the leaf from everything else.
+	Next, each pair of nodes has a $Q$ score:
+	$$Q_{i,j} = dist(i,j) - r_i - r_j$$
+	The algorithm picks the nodes with the minimum $Q$ score to join together, and keeps joining
+	pairs until the tree is made.
+	</div>
+	<div class="explanation" id="upgmaexplain">
+	UPGMA creates an ultrametric tree. It takes the two leaves that are the closest together and gives them	a common parent. The distance from the new node to any other leaf is a weighted average of the distances from the child nodes to that leaf. The algorithm keeps picking closest nodes until the tree is made.
+	</div>
+	<button onclick="beginNeighborJoining()">Neighbor Joining</button> 
+	<button onclick="beginUPGMA()">Unweighted Pair Group Method with Arithmetic Mean (UPGMA)</button>
+</div>
+<div id="holder">
+	<div id="cy"></div>
+	<div id="distances">
+		Disimilarity Matrix 
+		<table id="disttable">
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+</div>
+	
+</body>
+</html>
